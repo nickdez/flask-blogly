@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.full_name }}{% endblock %}}
+
+{% block content %}
+
+<div class="row">
+
+    {% if user.image_url %}
+    <div class="col-sm-2 col-6">
+        <img src="{{ user.image_url }}" alt="{{ user.full_name }}" class="img-fluid">
+    </div>
+    {% endif %}
+
+    <div class="col-sm-10 col-12">
+        <h1>{{ user.full_name }}</h1>
+
+        <form>
+            <button class="btn btn-primary btn-sm" formaction="/users/{{ user.id }}/edit" formmethod="GET">Edit
+            </button>
+            <button class="btn btn-danger btn-sm" formaction="/users/{{ user.id }}/delete" formmethod="POST">Delete
+            </button>
+        </form>
+        <div class="col-sm-10 col-12">
+            <h2>Posts</h2>
+            <div class="col-sm-2 col-6">
+                {% for post in user.posts %}
+                <li>
+                    <a href="/posts/{{ post.id}}">{{post.title}}</a>
+                    <i>
+                        <p>{{ post.proper_date }}</p>
+                    </i>
+                </li>
+                {% endfor %}
+                <form action="/users/{{ user.id }}/posts/new" method="GET">
+                    <button type="submit" class="btn btn-outline-success">Add Post</button>
+                </form>
+                <br>
+                <form action="/users" method="GET">
+                    <button type="submit" class="btn btn-outline-primary">User List</button>
+                </form>
+                <br>
+                <form action="/" method="GET">
+                    <button type="submit" class="btn btn-outline-info">Home</button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
